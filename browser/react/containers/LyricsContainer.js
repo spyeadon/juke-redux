@@ -5,7 +5,7 @@ import store from '../store.js';
 
 import initialState from '../initialState';
 import Lyrics from '../components/Lyrics.js';
-import { setLyrics } from '../action-creators/lyrics.js';
+import { fetchLyrics } from '../action-creators/lyrics.js';
 
 
  export default class LyricsContainer extends Component {
@@ -40,13 +40,15 @@ import { setLyrics } from '../action-creators/lyrics.js';
    handleSubmit (event){
     const artist = this.state.artistQuery;
     const song = this.state.songQuery;
-
-    axios.get(`/api/lyrics/${artist}/${song}`)
+    if (artist && song){
+      store.dispatch(fetchLyrics(artist, song));
+    }
+/*    axios.get(`/api/lyrics/${artist}/${song}`)
       .then( res => {
         console.log("res is: ", res.data);
         const setLyricsAction = setLyrics(res.data.lyric);
         store.dispatch(setLyricsAction);
-      });
+      });*/
    }
 
    render(){
@@ -59,7 +61,7 @@ import { setLyrics } from '../action-creators/lyrics.js';
           setSong={this.setSong}
           artistQuery={this.state.artistQuery}
           songQuery={this.state.songQuery}
-          text={this.state.text}
+          text={this.state.lyrics.text}
          />
       </div>
      );

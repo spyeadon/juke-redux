@@ -14,7 +14,6 @@ function setCurrentSong(song){
 function setCurrentSongList(playlist){
   return {type: SET_LIST, currentSongList: playlist}
 }
-function 
 
 export const play = function(){
   return function (dispatch){
